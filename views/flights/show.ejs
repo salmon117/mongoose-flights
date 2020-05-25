@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <title>Mongoose Flights- Flight <%= flight.flightNo %></title>
+    </head>
+
+    <body>
+        <a href="/">Home</a>
+        |
+        <a href="/flights">All Flights</a>
+        <h1>Flight <%= flight.flightNo %></h1>
+        <p>
+            Airline: <%= flight.airline %> Airlines
+            <br>Airport: <%= flight.airport %>
+            <br>Departs: <%= flight.departs %>
+        </p>
+        <h3>Destinations</h3>
+        <% if (flight.destinations.length) {%>
+            <ul>
+                <% flight.destinations.forEach(function(destination) { %>
+                    <li>
+                        Airport: <%= destination.airport %>
+                        <br>Arrival: <%= destination.arrival.toLocaleDateString() %>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No Destinations Yet</p>
+        <% }; %>
+        <form action="/flights/<%= flight._id %>/destinations" method="POST">
+            <label>Add Destination</label>
+            <br><br><select name="airport">
+                <option value="AUS">AUS</option>
+                <option value="DEN">DEN</option>
+                <option value="DFW">DFW</option>
+                <option value="LAX">LAX</option>
+                <option value="SAN">SAN</option>
+            </select>
+            <input type="date" name="arrival" required>
+            <button type="submit">Add Destination</button>
+        </form>
+    </body>
+</html>
